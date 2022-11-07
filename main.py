@@ -1,58 +1,84 @@
 import qiskit
-from qiskit import *
-from qiskit.compiler import transpile, assemble
-from config import API_KEY
+import pygame
+import sys
+import quantum_random
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT
 
-# Loading your IBM Q account(s)
-IBMQ.load_account()
-import numpy as np
+from pygame.locals import (
+    K_UP,
+    K_DOWN,
+    K_LEFT,
+    K_RIGHT,
+    K_ESCAPE,
+    KEYDOWN,
+    QUIT,
+)
 
-# def real_map(value, leftMin, leftMax, rightMin, rightMax):
-#     # Maps one range to another
-#     # Figure out how 'wide' each range is
-#     leftSpan = leftMax - leftMin
-#     rightSpan = rightMax - rightMin
+class Player(pygame.sprite.Sprite):
+    def __init__(self):
+        super(Player, self).__init__()
+        self.surface = pygame.Surface((25, 25))
+        self.surface.fill((255, 255, 255))
+        self.rect = self.surface.get_rect(
+            center = (SCREEN_WIDTH/2, SCREEN_HEIGHT - PLAYER_HEIGHT - 10)
+        )
 
-#     # Convert the left range into a 0-1 range (float)
-#     valueScaled = float(value - leftMin) / float(leftSpan)
+    # Move sprite based on inputs.
+    def update(self, pressed_keys):
+        if pressed_keys[K_UP]:
+            self.rect.move_ip(0, -2)
+        if pressed_keys[K_DOWN]:
+            self.rect.move_ip(0, 2)
+        if pressed_keys[K_LEFT]:
+            self.rect.move_ip(-2, 0)
+        if pressed_keys[K_RIGHT]:
+            self.rect.move_ip(2, 0)
 
-#     # Convert the 0-1 range into a value in the right range.
-#     return rightMin + (valueScaled * rightSpan)
+        # Setting boundaries.
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > SCREEN_WIDTH:
+            self.rect.right = SCREEN_WIDTH
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= SCREEN_HEIGHT:
+            self.rect.bottom = SCREEN_HEIGHT
 
-# def QRandom(a, b, qubits=2):
-#     # Quantum Random Number generator
-#     q = QuantumRegister(qubits, 'q')
-#     circ = QuantumCircuit(q)
-#     c0 = ClassicalRegister(2, 'c0')
-#     circ.add_register(c0)
+def run():
+     # Init display window.
+    screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
-#     for i in range(qubits):
-#         circ.h(q[i])
+    player = Player()
 
+    cont = True
+    while cont:
+        for event in pygame.event.get():
+            # User hits key
+            if event.type == KEYDOWN:
+                # Escape Key
+                if event.key == K_ESCAPE:
+                    cont = False
 
-#     for i in range(qubits):
-#         circ.measure(q[i], c0)
+            # User clicks close button
+            elif event.type == QUIT:
+                cont = False
 
-#     #circ.draw(output='mpl')
+        keys = pygame.key.get_pressed()
+        player.update(keys)
 
+        # Fill the screen with black
+        screen.fill((0, 0, 0))
+        # Drawing player
+        screen.blit(player.surface, player.rect)
 
-#     backend = Aer.get_backend('statevector_simulator')
-#     job = execute(circ, backend)
-#     #print(job.status())
-#     result = job.result()
-#     output = result.get_statevector(circ, decimals=5)
+        # Update the display
+        pygame.display.flip()
 
-#     n1 = 0
-#     n2 = 0
-#     n3 = 0
-#     for i in range( output.dim ):
-#         if abs(output[i]) != 0:
-#             #print(i, output[i])
-#             n1 = i
-#             n2 = np.real(output[i])
-#             n3 = np.imag(output[i])
-    
-#     y = real_map(n1+n2+n3, -qubits, len(output)-1+qubits, a, b) 
-#     return y
+def main():
+    pygame.init()
 
+    run()
 
+    pygame.quit()
+
+main()
