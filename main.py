@@ -48,11 +48,11 @@ class Player(pygame.sprite.Sprite):
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super(Enemy, self).__init__()
-        self.surface = pygame.Surface((20, 10))
+        self.surface = pygame.Surface((10, 20))
         self.surface.fill((255, 0, 0))
         self.rect = self.surface.get_rect(
             center=(
-                random.randint(0, SCREEN_WIDTH),
+                quantum_random.QRandom(0, SCREEN_WIDTH, 3),
                 5,
             )
         )
