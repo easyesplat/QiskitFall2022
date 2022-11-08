@@ -90,7 +90,8 @@ def run():
 
             # User clicks close button
             elif event.type == QUIT:
-                cont = False
+                pygame.quit()
+                quit()
 
             elif event.type == ENEMY_ADDITION:
                 # Create the new enemy and add it to sprite groups
@@ -120,15 +121,65 @@ def run():
         clock.tick(60)
 
 def title_screen():
+    white = (255, 255, 255)
+    black = (0, 0, 0)
+    white_grey = (242, 243, 245)
+    
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-    screen.fill(0, 0, 0)
+    
+    pygame.display.set_caption('Quantum Dodger')
+    font = pygame.font.Font('freesansbold.ttf', 32)
+    instruction_font = pygame.font.Font('freesansbold.ttf', 15)
+    text = font.render('Quantum Dodger', True, white)
+    instruction = instruction_font.render('Press any key to play.', True, white_grey)
+    textRect = text.get_rect()
+    textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+    instructionRect= instruction.get_rect()
+    instructionRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 40)
+    
+    cont = True
+    while cont:
+        screen.fill(black)
+        screen.blit(text, textRect)
+        screen.blit(instruction, instructionRect)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == KEYDOWN:
+                cont = False
+            pygame.display.update()
+
+def end_screen():
+    red = (255, 0, 0)
+    black = (0, 0, 0)
+    
+    screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+    
+    pygame.display.set_caption('Quantum Dodger')
+    font = pygame.font.Font('freesansbold.ttf', 32)
+    text = font.render('YOU DIED', True, red)
+    textRect = text.get_rect()
+    textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+    
+    cont = True
+    while cont:
+        screen.fill(black)
+        screen.blit(text, textRect)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == KEYDOWN:
+                cont = False
+            pygame.display.update()
 
 def main():
     pygame.init()
     
-   # title_screen()
+    title_screen()
     run()
-   # end_screen()
+    end_screen()
 
     pygame.quit()
 
