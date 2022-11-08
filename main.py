@@ -52,7 +52,7 @@ class Enemy(pygame.sprite.Sprite):
         self.surface.fill((255, 0, 0))
         self.rect = self.surface.get_rect(
             center=(
-                quantum_random.QRandom(0, SCREEN_WIDTH, 3),
+                quantum_random.QRandom(-150, SCREEN_WIDTH+30, 3),
                 5,
             )
         )
