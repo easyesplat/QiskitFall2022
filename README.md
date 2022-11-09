@@ -20,3 +20,7 @@ For our project, we decided to implement the random number algorithm into a simp
     <td><img src="images/endscreen.png" width=270></td>
   </tr>
  </table>
+
+## Citations
+[Quantum RNG Source] https://github.com/qiskit-community/qiskit-community-tutorials/tree/master/Cryptography
+[PyGame Source] https://realpython.com/pygame-a-primer/
