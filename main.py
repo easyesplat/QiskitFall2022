@@ -57,30 +57,44 @@ class Enemy(pygame.sprite.Sprite):
             )
         )
         #self.speed = random.randint(5, 20)
-        self.speed = 10
+        self.vspeed = quantum_random.QRandom(0, 10, 3)
+        self.hspeed = quantum_random.QRandom(-5, 5, 3)
 
     def update(self):
-        self.rect.move_ip(0, self.speed)
+        self.rect.move_ip(self.hspeed, self.vspeed)
         if self.rect.top > SCREEN_HEIGHT:
+            self.kill()
+        elif self.rect.left > SCREEN_WIDTH:
+            self.kill()
+        elif self.rect.right < 0:
             self.kill()
 
 def run():
     # Init display window.
+    white = (255, 255, 255)
+
+    time_init = pygame.time.get_ticks()
+
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
     # Custom event
     ENEMY_ADDITION = pygame.USEREVENT + 1
-    pygame.time.set_timer(ENEMY_ADDITION, 250)
+    pygame.time.set_timer(ENEMY_ADDITION, 200)
 
     player = Player()
     enemies = pygame.sprite.Group()
     all_sprites = pygame.sprite.Group()
     all_sprites.add(player)
 
+    font = pygame.font.Font('freesansbold.ttf', 32)
+
     clock = pygame.time.Clock()
 
     cont = True
     while cont:
+        
+        
+
         for event in pygame.event.get():
             # User hits key
             if event.type == KEYDOWN:
@@ -105,6 +119,12 @@ def run():
 
         # Fill the screen with black
         screen.fill((0, 0, 0))
+
+        time_elapsed = pygame.time.get_ticks()
+        text = font.render(str((time_elapsed-time_init)//1000), True, white)
+        textRect = text.get_rect()
+        textRect.center = (40, 40)
+        screen.blit(text, textRect)
         
         for entity in all_sprites:
             screen.blit(entity.surface, entity.rect)
@@ -119,6 +139,8 @@ def run():
         pygame.display.flip()
 
         clock.tick(60)
+
+    return str((time_elapsed-time_init)//1000)
 
 def title_screen():
     white = (255, 255, 255)
@@ -150,22 +172,29 @@ def title_screen():
                 cont = False
             pygame.display.update()
 
-def end_screen():
+def end_screen(score):
     red = (255, 0, 0)
     black = (0, 0, 0)
+    white = (255, 255, 255)
     
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
     
     pygame.display.set_caption('Quantum Dodger')
     font = pygame.font.Font('freesansbold.ttf', 32)
+    font2 = pygame.font.Font('freesansbold.ttf', 16)
     text = font.render('YOU DIED', True, red)
     textRect = text.get_rect()
     textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+
+    text2 = font2.render("Score: " + score, True, white)
+    text2Rect = text2.get_rect()
+    text2Rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT //2 +40)
     
     cont = True
     while cont:
         screen.fill(black)
         screen.blit(text, textRect)
+        screen.blit(text2, text2Rect)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -178,8 +207,8 @@ def main():
     pygame.init()
     
     title_screen()
-    run()
-    end_screen()
+    score = run()
+    end_screen(score)
 
     pygame.quit()
 
