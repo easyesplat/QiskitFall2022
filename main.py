@@ -1,3 +1,4 @@
+from json import load
 import qiskit
 import pygame
 import sys
@@ -21,8 +22,9 @@ class Player(pygame.sprite.Sprite):
         self.surface = pygame.Surface((25, 25))
         self.surface.fill((255, 255, 255))
         self.rect = self.surface.get_rect(
-            center = (SCREEN_WIDTH/2, SCREEN_HEIGHT - PLAYER_HEIGHT - 10)
+            center = (SCREEN_WIDTH/2, SCREEN_HEIGHT - PLAYER_HEIGHT-30)
         )
+        self.image = pygame.image.load("./images/bear_1_15.png")
 
     # Move sprite based on inputs.
     def update(self, pressed_keys):
@@ -48,7 +50,7 @@ class Player(pygame.sprite.Sprite):
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super(Enemy, self).__init__()
-        self.surface = pygame.Surface((10, 20))
+        self.surface = pygame.Surface((20, 28))
         self.surface.fill((255, 0, 0))
         self.rect = self.surface.get_rect(
             center=(
@@ -59,6 +61,7 @@ class Enemy(pygame.sprite.Sprite):
         #self.speed = random.randint(5, 20)
         self.vspeed = quantum_random.QRandom(0, 10, 3)
         self.hspeed = quantum_random.QRandom(-5, 5, 3)
+        self.image = pygame.image.load("./images/Fireball_15.png")
 
     def update(self):
         self.rect.move_ip(self.hspeed, self.vspeed)
@@ -90,6 +93,9 @@ def run():
 
     clock = pygame.time.Clock()
 
+    pygame.mixer.music.load("./sounds/Feel-Good.mp3")
+    pygame.mixer.music.play(-1)
+
     cont = True
     while cont:
         
@@ -120,6 +126,8 @@ def run():
         # Fill the screen with black
         screen.fill((0, 0, 0))
 
+        
+
         time_elapsed = pygame.time.get_ticks()
         text = font.render(str((time_elapsed-time_init)//1000), True, white)
         textRect = text.get_rect()
@@ -127,12 +135,15 @@ def run():
         screen.blit(text, textRect)
         
         for entity in all_sprites:
-            screen.blit(entity.surface, entity.rect)
+            screen.blit(entity.image, entity.rect)
+
 
         # Check if any enemies have collided with the player
         if pygame.sprite.spritecollideany(player, enemies):
             # If so, then remove the player and stop the loop
             player.kill()
+            pygame.mixer.music.load("./sounds/hq-explosion-6288.mp3")
+            pygame.mixer.music.play(1)
             cont = False
 
         # Update the display
