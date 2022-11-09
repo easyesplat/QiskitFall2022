@@ -93,7 +93,7 @@ def run():
 
     clock = pygame.time.Clock()
 
-    pygame.mixer.music.load("./sounds/Feel-Good.mp3")
+    pygame.mixer.music.load("./sounds/gamemusic.mp3")
     pygame.mixer.music.play(-1)
 
     cont = True
