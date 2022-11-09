@@ -1,9 +1,5 @@
 from qiskit import *
 from qiskit.compiler import transpile, assemble
-from config import API_KEY
-
-# Loading your IBM Q account(s)
-IBMQ.load_account()
 import numpy as np
 
 def real_map(value, leftMin, leftMax, rightMin, rightMax):
