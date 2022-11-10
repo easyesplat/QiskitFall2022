@@ -6,7 +6,7 @@ import quantum_random
 import random
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT
 
-#macros for key inputs
+# Macros for key inputs
 from pygame.locals import (
     K_UP,
     K_DOWN,
@@ -17,19 +17,19 @@ from pygame.locals import (
     QUIT,
 )
 
-#user controlled sprite
+# User controlled sprite
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super(Player, self).__init__()
-        #player size
+        # Player size
         self.surface = pygame.Surface((PLAYER_WIDTH, PLAYER_HEIGHT))
 
-        #player starting position
+        # Player starting position
         self.rect = self.surface.get_rect(
             center = (SCREEN_WIDTH/2, SCREEN_HEIGHT - PLAYER_HEIGHT-30)
         )
 
-        #sprite image
+        # Sprite image
         self.image = pygame.image.load("./images/bear_1_15.png")
 
     # Move sprite based on inputs.
@@ -53,14 +53,14 @@ class Player(pygame.sprite.Sprite):
         if self.rect.bottom >= SCREEN_HEIGHT:
             self.rect.bottom = SCREEN_HEIGHT
 
-#enemy sprite
+# Enemy sprite
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super(Enemy, self).__init__()
-        #enemy size
+        # Enemy size
         self.surface = pygame.Surface((20, 28))
 
-        #enemy starting position, randomized by quantum computing
+        # Enemy starting position, randomized by quantum computing
         self.rect = self.surface.get_rect(
             center=(
                 quantum_random.QRandom(-150, SCREEN_WIDTH+30, 3),
@@ -68,14 +68,14 @@ class Enemy(pygame.sprite.Sprite):
             )
         )
 
-        #horizontal and vertical velocity, randomized by quantum computing
+        # Horizontal and vertical velocity, randomized by quantum computing
         self.vspeed = quantum_random.QRandom(0, 10, 3)
         self.hspeed = quantum_random.QRandom(-5, 5, 3)
 
-        #image of enemy sprite
+        # Image of enemy sprite
         self.image = pygame.image.load("./images/Fireball_15.png")
 
-    #update position based on velocities
+    # Update position based on velocities
     def update(self):
         self.rect.move_ip(self.hspeed, self.vspeed)
         if self.rect.top > SCREEN_HEIGHT:
@@ -89,25 +89,25 @@ def run():
     # Init display window.
     white = (255, 255, 255)
 
-    #start time
+    # Start time
     time_init = pygame.time.get_ticks()
 
-    #game screen
+    # Game screen
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
     # Custom event
     ENEMY_ADDITION = pygame.USEREVENT + 1
 
-    #add enemy sprite every 200ms
+    # Add enemy sprite every 200ms
     pygame.time.set_timer(ENEMY_ADDITION, 200)
 
-    #create sprites
+    # Create sprites
     player = Player()
     enemies = pygame.sprite.Group()
     all_sprites = pygame.sprite.Group()
     all_sprites.add(player)
 
-    #font, timer, and music
+    # Font, timer, and music
     font = pygame.font.Font('freesansbold.ttf', 32)
     clock = pygame.time.Clock()
     pygame.mixer.music.load("./sounds/gamemusic.mp3")
@@ -115,10 +115,8 @@ def run():
 
     cont = True
 
-    #game loop
+    # Game loop
     while cont:
-        
-        
         for event in pygame.event.get():
             # User hits key
             if event.type == KEYDOWN:
@@ -145,14 +143,14 @@ def run():
         screen.fill((0, 0, 0))
 
         
-        #count score based on time alive
+        # Count score based on time alive
         time_elapsed = pygame.time.get_ticks()
         text = font.render(str((time_elapsed-time_init)//1000), True, white)
         textRect = text.get_rect()
         textRect.center = (40, 40)
         screen.blit(text, textRect)
         
-        #add sprites to screen
+        # Add sprites to screen
         for entity in all_sprites:
             screen.blit(entity.image, entity.rect)
 
@@ -170,19 +168,19 @@ def run():
 
         clock.tick(60)
 
-    #return score
+    # Return score
     return str((time_elapsed-time_init)//1000)
 
-#title screen of game
+# Title screen of game
 def title_screen():
     white = (255, 255, 255)
     black = (0, 0, 0)
     white_grey = (242, 243, 245)
     
-    #display screen
+    # Display screen
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
     
-    #display text on screen
+    # Display text on screen
     pygame.display.set_caption('Quantum Dodger')
     font = pygame.font.Font('freesansbold.ttf', 32)
     instruction_font = pygame.font.Font('freesansbold.ttf', 15)
@@ -194,7 +192,7 @@ def title_screen():
     instructionRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 40)
     
     cont = True
-    #loop for title screen
+    # Loop for title screen
     while cont:
         screen.fill(black)
         screen.blit(text, textRect)
@@ -207,16 +205,16 @@ def title_screen():
                 cont = False
             pygame.display.update()
 
-#end screen after game
+# End screen after game
 def end_screen(score):
     red = (255, 0, 0)
     black = (0, 0, 0)
     white = (255, 255, 255)
     
-    #end screen
+    # End screen
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
     
-    #display text and ending score
+    # Display text and ending score
     pygame.display.set_caption('Quantum Dodger')
     font = pygame.font.Font('freesansbold.ttf', 32)
     font2 = pygame.font.Font('freesansbold.ttf', 16)
@@ -229,7 +227,7 @@ def end_screen(score):
     text2Rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT //2 +40)
     
     cont = True
-    #loop to display end screen
+    # Loop to display end screen
     while cont:
         screen.fill(black)
         screen.blit(text, textRect)
@@ -242,7 +240,7 @@ def end_screen(score):
                 cont = False
             pygame.display.update()
 
-#running game
+# Running game
 def main():
     pygame.init()
     
