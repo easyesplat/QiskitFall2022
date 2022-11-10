@@ -1,6 +1,6 @@
 # Quantum Dodger
-Names: Alejandro Ortiz, Eric Choi, Austin Yang, Cian Gonzales
-Team Name: IT Squad
+* Names: Alejandro Ortiz, Eric Choi, Austin Yang, Cian Gonzales
+* Team Name: IT Squad
 
 ## Description of Problem and Overview of Solution
 The problem we decided to address using Qiskit was randomness. Regular pauli gates like the x, y, and z gates perform operations on qubits; however their effects are no different from applying logic gates to a bit from a classical computer. Classical computers can only compute pseudo-random numbers using a definite computational process. A set of values from pseudorandom would be statistically random; however, it is derived from a known starting point. The nature of qubits is based on randomness. The Hadamard gate places a qubit in a state of superposition with equal probability of the qubit being spin up or spin down when measured. Quantum randomness, unlike classical randomness, is based on true randomness that exists in nature. While classical pseudo-randomness depends on deterministic quantities to get a random result, quantum randomness uses a true random process to get a random result achieving true randomness. 
