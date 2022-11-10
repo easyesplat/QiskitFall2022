@@ -22,7 +22,7 @@ For our project, we decided to implement the random number generator algorithm i
  </table>
 
  ## Video
- Our informational video is called "QuantumDodgerVideo.mp4" and is within this repository.
+ Our informational video is called "QuantumDodgerVideo.mp4" and is attached within this repository.
 
 ## Citations
 * [Quantum RNG Source] https://github.com/qiskit-community/qiskit-community-tutorials/tree/master/Cryptography
