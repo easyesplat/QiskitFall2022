@@ -28,3 +28,8 @@ For our project, we decided to implement the random number generator algorithm i
 * [Quantum RNG Source] https://github.com/qiskit-community/qiskit-community-tutorials/tree/master/Cryptography
 * [PyGame Source] https://realpython.com/pygame-a-primer/
 * Special Shoutout to Yokai for developing Quantum Dodger's soundtrack
+
+## License
+`quantum_random.py` is adapted from [QRandom.ipynb](https://github.com/qiskit-community/qiskit-community-tutorials/blob/master/Cryptography/QRandom.ipynb) in qiskit-community/qiskit-community-tutorials, which is licensed under the Apache License 2.0. Our changes to it are copyright 2022 Eric Choi, Alejandro Ortiz and Austin Yang and are also licensed under the Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+
+The license covers `quantum_random.py` only. It does not cover the rest of the game code, the sprites, the soundtrack and sound effects, or the video.

@@ -1,0 +1,15 @@
+Quantum Dodger, by IT Squad
+
+quantum_random.py
+Modifications copyright 2022 Eric Choi, Alejandro Ortiz, Austin Yang.
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+quantum_random.py is adapted from QRandom.ipynb in
+qiskit-community/qiskit-community-tutorials
+https://github.com/qiskit-community/qiskit-community-tutorials/blob/master/Cryptography/QRandom.ipynb
+which is licensed under the Apache License, Version 2.0.
+
+Scope: the LICENSE in this repository applies to quantum_random.py, including
+earlier versions of it in this repository's history. It does not cover
+main.py, constants.py, the sprites in images/, the soundtrack and sound
+effects in sounds/, or QuantumDodgerVideo.mp4.
