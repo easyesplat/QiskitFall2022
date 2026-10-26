@@ -1,3 +1,13 @@
+# Adapted from QRandom.ipynb in qiskit-community/qiskit-community-tutorials
+# https://github.com/qiskit-community/qiskit-community-tutorials/blob/master/Cryptography/QRandom.ipynb
+# licensed under the Apache License, Version 2.0.
+#
+# Changes: removed IBMQ account loading and plotting, rewrote comments,
+# used output.dim instead of output.size, renamed real_map to prac_map.
+#
+# Modifications copyright 2022 Eric Choi, Alejandro Ortiz, Austin Yang.
+# Licensed under the Apache License, Version 2.0. See LICENSE and NOTICE.
+
 from qiskit import *
 from qiskit.compiler import transpile, assemble
 import numpy as np
